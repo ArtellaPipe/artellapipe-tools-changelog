@@ -1,4 +1,4 @@
-artellapipe-tools-welcome
+artellapipe-tools-changelog
 ============================================================
 
-Tool that shows useful information for the current Artella project
+Tool that shows generic changelog for Artella project
