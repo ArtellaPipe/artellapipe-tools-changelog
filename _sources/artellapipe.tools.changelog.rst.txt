@@ -1,0 +1,17 @@
+artellapipe.tools.changelog package
+===================================
+
+Submodules
+----------
+
+.. toctree::
+
+   artellapipe.tools.changelog.changelog
+
+Module contents
+---------------
+
+.. automodule:: artellapipe.tools.changelog
+   :members:
+   :undoc-members:
+   :show-inheritance:
