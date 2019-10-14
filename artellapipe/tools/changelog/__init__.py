@@ -55,8 +55,8 @@ def init(do_reload=False):
 
     create_logger_directory()
 
-    resources_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'resources')
-    resource.ResourceManager.instance().register_resource(resources_path)
+    resources_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources')
+    resource.ResourceManager().register_resource(resources_path)
 
 
 @exceptions.sentry_exception
