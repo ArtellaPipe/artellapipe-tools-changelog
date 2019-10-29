@@ -22,21 +22,12 @@ from Qt.QtWidgets import *
 
 from tpQtLib.widgets import accordion
 
-from artellapipe.gui import window
+from artellapipe.core import tool
 
 
-class ArtellaChangelog(window.ArtellaWindow, object):
-
-    VERSION = '0.0.1'
-    LOGO_NAME = 'changelog_logo'
-
-    def __init__(self, project):
-        super(ArtellaChangelog, self).__init__(
-            project=project,
-            name='ArtellaChangelogWindow',
-            title='Changelog',
-            size=(550, 600)
-        )
+class ArtellaChangelog(tool.Tool, object):
+    def __init__(self, project, config):
+        super(ArtellaChangelog, self).__init__(project=project, config=config)
 
         self._load_changelog()
 
@@ -61,7 +52,7 @@ class ArtellaChangelog(window.ArtellaWindow, object):
                 border-bottom-right-radius: 5;
                 background-color: rgb(50, 50, 50);
                 """)
-        ok_btn.clicked.connect(self.fade_close)
+        ok_btn.clicked.connect(self.close_tool_attacher)
         self.main_layout.addWidget(scroll)
         self.main_layout.setAlignment(Qt.AlignTop)
         self.main_layout.addWidget(ok_btn)
@@ -131,10 +122,3 @@ class ArtellaChangelog(window.ArtellaWindow, object):
         version_label.setText(version_text)
 
         # self.main_layout.addSpacing(5)
-
-
-def run(project):
-    win = ArtellaChangelog(project=project)
-    win.show()
-
-    return win
