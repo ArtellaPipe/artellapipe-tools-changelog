@@ -14,8 +14,12 @@ __email__ = "tpovedatd@gmail.com"
 
 import os
 import json
+import logging
 from collections import OrderedDict
 from distutils.version import LooseVersion
+
+import yaml
+import yamlordereddictloader
 
 from Qt.QtCore import *
 from Qt.QtWidgets import *
@@ -23,6 +27,8 @@ from Qt.QtWidgets import *
 from tpQtLib.widgets import accordion
 
 from artellapipe.core import tool
+
+LOGGER = logging.getLogger()
 
 
 class ArtellaChangelog(tool.Tool, object):
@@ -74,10 +80,16 @@ class ArtellaChangelog(tool.Tool, object):
 
         changelog_json_file = self._project.get_changelog_path()
         if not os.path.isfile(changelog_json_file):
+            LOGGER.warning('Changelog File "{}" does not exists!'.format(changelog_json_file))
             return
 
+        LOGGER.warning('Loading Changelog from: "{}"'.format(changelog_json_file))
+
         with open(changelog_json_file, 'r') as f:
-            changelog_data = json.load(f, object_pairs_hook=OrderedDict)
+            if changelog_json_file.endswith('.json'):
+                changelog_data = json.load(f, object_pairs_hook=OrderedDict)
+            else:
+                changelog_data = yaml.load(f, Loader=yamlordereddictloader.Loader)
         if not changelog_data:
             return
 

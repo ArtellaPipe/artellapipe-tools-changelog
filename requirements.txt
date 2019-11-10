@@ -10,3 +10,5 @@ sphinx_rtd_theme
 python-json-logger
 sentry-sdk
 artellapipe
+pyyaml
+yamlordereddictloader
