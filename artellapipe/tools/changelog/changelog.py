@@ -26,12 +26,12 @@ from Qt.QtWidgets import *
 
 from tpQtLib.widgets import accordion
 
-from artellapipe.core import tool
+import artellapipe
 
 LOGGER = logging.getLogger()
 
 
-class ArtellaChangelog(tool.Tool, object):
+class ArtellaChangelog(artellapipe.Tool, object):
     def __init__(self, project, config):
         super(ArtellaChangelog, self).__init__(project=project, config=config)
 
