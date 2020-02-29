@@ -1,12 +1,13 @@
 artellapipe.tools.changelog package
 ===================================
 
-Submodules
-----------
+Subpackages
+-----------
 
 .. toctree::
 
-   artellapipe.tools.changelog.changelog
+   artellapipe.tools.changelog.core
+   artellapipe.tools.changelog.widgets
 
 Module contents
 ---------------

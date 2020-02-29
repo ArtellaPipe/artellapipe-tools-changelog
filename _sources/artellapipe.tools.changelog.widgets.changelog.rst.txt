@@ -1,0 +1,7 @@
+artellapipe.tools.changelog.widgets.changelog module
+====================================================
+
+.. automodule:: artellapipe.tools.changelog.widgets.changelog
+   :members:
+   :undoc-members:
+   :show-inheritance:
