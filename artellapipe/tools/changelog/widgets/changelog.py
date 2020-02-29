@@ -24,16 +24,16 @@ import yamlordereddictloader
 from Qt.QtCore import *
 from Qt.QtWidgets import *
 
-from tpQtLib.widgets import accordion
+from tpDcc.libs.qt.widgets import accordion
 
 import artellapipe
 
 LOGGER = logging.getLogger()
 
 
-class ArtellaChangelog(artellapipe.Tool, object):
-    def __init__(self, project, config):
-        super(ArtellaChangelog, self).__init__(project=project, config=config)
+class ArtellaChangelog(artellapipe.ToolWidget, object):
+    def __init__(self, project, config, settings, parent):
+        super(ArtellaChangelog, self).__init__(project=project, config=config, settings=settings, parent=parent)
 
         self._load_changelog()
 
@@ -51,23 +51,13 @@ class ArtellaChangelog(artellapipe.Tool, object):
         scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         scroll.setWidgetResizable(True)
         scroll.setFocusPolicy(Qt.NoFocus)
-        ok_btn = QPushButton('OK')
-        ok_btn.setMinimumHeight(30)
-        ok_btn.setStyleSheet("""
-                border-bottom-left-radius: 5;
-                border-bottom-right-radius: 5;
-                background-color: rgb(50, 50, 50);
-                """)
-        ok_btn.clicked.connect(self.close_tool_attacher)
         self.main_layout.addWidget(scroll)
         self.main_layout.setAlignment(Qt.AlignTop)
-        self.main_layout.addWidget(ok_btn)
+        # self.main_layout.addWidget(ok_btn)
         scroll.setWidget(central_widget)
         central_widget.setLayout(scroll_layout)
         self.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
         self.main_layout = scroll_layout
-
-        # ===========================================================================================
 
         self.version_accordion = accordion.AccordionWidget(parent=self)
         self.version_accordion.rollout_style = accordion.AccordionStyle.MAYA
@@ -132,5 +122,3 @@ class ArtellaChangelog(artellapipe.Tool, object):
         for item in elements:
             version_text += '- {}\n'.format(item)
         version_label.setText(version_text)
-
-        # self.main_layout.addSpacing(5)
