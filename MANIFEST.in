@@ -1,2 +1,4 @@
 include artellapipe/tools/changelog/__logging__.ini
 recursive-include artellapipe/tools/changelog/resources/* *.*
+include versioneer.py
+include artellapipe/tools/changelog/_version.py
