@@ -1,14 +1,4 @@
 # ===================================================================
 # artellapipe-tools-changelog requirements file
 # ===================================================================
-Qt.py
-pytest
-pytest-cov
-coveralls
-sphinx
-sphinx_rtd_theme
-python-json-logger
-sentry-sdk
 artellapipe
-pyyaml
-yamlordereddictloader
