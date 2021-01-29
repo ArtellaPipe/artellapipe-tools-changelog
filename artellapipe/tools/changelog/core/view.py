@@ -2,15 +2,10 @@
 # -*- coding: utf-8 -*-
 
 """
-Tool that shows the changelog for the current version of the pipeline tools
+Module that contains artellapipe-tools-changelog view implementation
 """
 
 from __future__ import print_function, division, absolute_import
-
-__author__ = "Tomas Poveda"
-__license__ = "MIT"
-__maintainer__ = "Tomas Poveda"
-__email__ = "tpovedatd@gmail.com"
 
 import os
 import json
@@ -21,28 +16,28 @@ from distutils.version import LooseVersion
 import yaml
 import yamlordereddictloader
 
-from Qt.QtCore import *
-from Qt.QtWidgets import *
+from Qt.QtCore import Qt
+from Qt.QtWidgets import QSizePolicy, QWidget, QScrollArea
 
-from tpDcc.libs.qt.widgets import accordion
+from tpDcc.libs.qt.widgets import layouts, accordion, buttons, label
 
 from artellapipe.core import tool
 
-LOGGER = logging.getLogger()
+from artellapipe.tools.changelog.core import consts
+
+logger = logging.getLogger(consts.TOOL_ID)
 
 
-class ArtellaChangelog(tool.ArtellaToolWidget, object):
+class ChangelogView(tool.ArtellaToolWidget, object):
     def __init__(self, project, config, settings, parent):
-        super(ArtellaChangelog, self).__init__(project=project, config=config, settings=settings, parent=parent)
+        super(ChangelogView, self).__init__(project=project, config=config, settings=settings, parent=parent)
 
         self._load_changelog()
 
     def ui(self):
-        super(ArtellaChangelog, self).ui()
+        super(ChangelogView, self).ui()
 
-        scroll_layout = QVBoxLayout()
-        scroll_layout.setContentsMargins(0, 0, 0, 0)
-        scroll_layout.setSpacing(0)
+        scroll_layout = layouts.VerticalLayout(spacing=0, margins=(0, 0, 0, 0))
         scroll_layout.setAlignment(Qt.AlignTop)
         central_widget = QWidget()
         central_widget.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
@@ -51,7 +46,7 @@ class ArtellaChangelog(tool.ArtellaToolWidget, object):
         scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         scroll.setWidgetResizable(True)
         scroll.setFocusPolicy(Qt.NoFocus)
-        ok_btn = QPushButton('OK')
+        ok_btn = buttons.BaseButton('OK', parent=self)
         ok_btn.setMinimumHeight(30)
         ok_btn.setStyleSheet("""
                 border-bottom-left-radius: 5;
@@ -80,10 +75,10 @@ class ArtellaChangelog(tool.ArtellaToolWidget, object):
 
         changelog_json_file = self._project.get_changelog_path()
         if not os.path.isfile(changelog_json_file):
-            LOGGER.warning('Changelog File "{}" does not exists!'.format(changelog_json_file))
+            logger.warning('Changelog File "{}" does not exists!'.format(changelog_json_file))
             return
 
-        LOGGER.warning('Loading Changelog from: "{}"'.format(changelog_json_file))
+        logger.warning('Loading Changelog from: "{}"'.format(changelog_json_file))
 
         with open(changelog_json_file, 'r') as f:
             if changelog_json_file.endswith('.json'):
@@ -119,18 +114,14 @@ class ArtellaChangelog(tool.ArtellaToolWidget, object):
         """
 
         version_widget = QWidget()
-        version_layout = QVBoxLayout()
-        version_layout.setContentsMargins(0, 0, 0, 0)
-        version_layout.setSpacing(0)
+        version_layout = layouts.VerticalLayout(spacing=0, margins=(0, 0, 0, 0))
         version_layout.setAlignment(Qt.AlignTop)
         version_widget.setLayout(version_layout)
         self.version_accordion.add_item(version, version_widget, collapsed=True)
 
-        version_label = QLabel()
+        version_label = label.BaseLabel(parent=self)
         version_layout.addWidget(version_label)
         version_text = ''
         for item in elements:
             version_text += '- {}\n'.format(item)
         version_label.setText(version_text)
-
-        # self.main_layout.addSpacing(5)
